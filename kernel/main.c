@@ -136,18 +136,18 @@ int kmain(int argc, char** argv, uint32_t table)
 	unsigned swi_ins[2] ={0,0}; /* array to store replaced SWI instructions */
 	unsigned irq_ins[2] ={0,0}; /* array to store replaced IRQ instructions */
 	unsigned new_swi_adr = (unsigned) New_S_Handler; /* pointer to new SWI handler */
-	unsigned new_irq_adr = (unsigned) New_IRQ_Handler; /* pointer to new IRQ handler */
+	unsigned new_irq_adr = (unsigned) irq_wrapper; /* pointer to new IRQ handler */
 
-  /* Setting the global ptrs of SWI and IRQ handler */
-  set_handler_ptr(SWI_VEC_ADDRESS);
-  set_handler_ptr(IRQ_VEC_ADDRESS);
+  	/* Setting the global ptrs of SWI and IRQ handler */
+  	set_handler_ptr(SWI_VEC_ADDRESS);
+  	set_handler_ptr(IRQ_VEC_ADDRESS);
 
 
 	/* installs new swi handler */
-  install_g_handler(SWI_VEC_ADDRESS,new_swi_adr,swi_ins);
+  	install_g_handler(SWI_VEC_ADDRESS,new_swi_adr,swi_ins);
 
-  /* installs new irq handler */
-  install_g_handler(IRQ_VEC_ADDRESS,new_irq_adr,irq_ins);
+  	/* installs new irq handler */
+  	install_g_handler(IRQ_VEC_ADDRESS,new_irq_adr,irq_ins);
 	
 	
   /* initializes OS timer */

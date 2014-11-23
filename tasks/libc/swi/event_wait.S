@@ -7,8 +7,11 @@
  */
 
 #include <asm.h>
+#include <bits/swi.h>
+#include <bits/errno.h>
 
 	.file "event_wait.S"
 
 FUNC(event_wait)
-	@ Add code here.  Put your name at the top.
+	swi EVENT_WAIT
+	mov pc, lr

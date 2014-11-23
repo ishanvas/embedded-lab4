@@ -82,8 +82,8 @@ void runqueue_add(tcb_t* tcb , uint8_t prio  )
 	int array_index = prio/8;
 	int bit_index = prio%8;
 
-	run_bits[7- array_index]  = run_bits[7- array_index] | (1<<bit_index);
-
+	run_bits[array_index]  = run_bits[array_index] | (1<<bit_index);
+	group_run_bits = group_run_bits | (1 << (array_index));
 }
 
 
@@ -98,8 +98,13 @@ tcb_t* runqueue_remove(uint8_t prio)
 {
 	int array_index = prio/8;
 	int bit_index = prio%8;
+	
+	run_bits[array_index] = run_bits[array_index] & ~(1<<bit_index);
 
-	run_bits[7- array_index] = run_bits[7- array_index] & ~(1<<bit_index);
+	if (run_bits[array_index] == 0)
+    {
+    	group_run_bits = group_run_bits & ~(1 << (array_index));
+    }
 
 	return run_list[prio]; 
 }
@@ -110,5 +115,8 @@ tcb_t* runqueue_remove(uint8_t prio)
  */
 uint8_t highest_prio(void)
 {
-	return 1; // fix this; dummy return to prevent warning messages	
+	unsigned int y = prio_unmap_table[group_run_bits];
+    unsigned int x = prio_unmap_table[run_bits[y]];
+    unsigned int prio= (y << 3) + x;
+    return prio; // fix this; dummy return to prevent warning messages	
 }

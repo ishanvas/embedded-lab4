@@ -48,7 +48,8 @@ void dev_init(void)
 	int i;
 	/* initializing all the device next match values */
    for (i = 0; i < NUM_DEVICES; ++i)
-   {
+   {	
+   		devices[i].sleep_queue =  (tcb_t *) 0;
    		devices[i].next_match = dev_freq[i];
    }
 }
@@ -65,13 +66,42 @@ void dev_wait(unsigned int dev __attribute__((unused)))
 
 	tcb_t* cur_tcb = get_cur_tcb();
 
-	/* fix this */
-	devices[dev].sleep_queue =  cur_tcb;
+	tcb_t* cur_sleep_tcb = devices[dev].sleep_queue;
+
+	uint32_t cpsr;
+	asm volatile ("mrs %0, cpsr" : "=r" (cpsr));
+	cpsr |= PSR_IRQ | PSR_FIQ;
+	asm volatile ("msr cpsr_c, %0" : : "r" (cpsr) : "memory", "cc");
+
+	if(cur_sleep_tcb == (tcb_t*)0)
+	{
+		devices[dev].sleep_queue =  cur_tcb;	
+
+	}
+	else
+	{
+		while(cur_sleep_tcb->sleep_queue != (tcb_t*)0)
+		{
+			cur_sleep_tcb = cur_sleep_tcb->sleep_queue;
+		}
+
+		cur_sleep_tcb->	sleep_queue = cur_tcb;
+	}
+
 
 	dispatch_sleep();
+	
+	asm volatile ("mrs %0, cpsr" : "=r" (cpsr));
+	cpsr &= ~(PSR_IRQ | PSR_FIQ);
+	asm volatile ("msr cpsr_c, %0" : : "r" (cpsr) : "memory", "cc");
+	
 
 
+
+	
 }
+
+
 
 
 /**
@@ -81,21 +111,27 @@ void dev_wait(unsigned int dev __attribute__((unused)))
  * interrupt corresponded to the interrupt frequency of a device, this 
  * function should ensure that the task is made ready to run 
  */
-void dev_update(unsigned long millis __attribute__((unused)))
+void dev_update(volatile unsigned long millis)
 {
 	int match =0;
 	int i;
 	for (i = 0; i < NUM_DEVICES; ++i)
 	{
-		if( millis % devices[i].next_match ==0)
+		if( millis % devices[i].next_match == 0)
 		{
 			match =1;
-			/* Disabling interrupts since, add should be synchronized */
-			disable_interrupts();
-			/* Removing current task from run list */
-			runqueue_add(devices[i].sleep_queue, devices[i].sleep_queue->cur_prio);
+				/* Disabling interrupts since, add should be synchronized */
+			
+					/* Removing current task from run list */
+
+			tcb_t* cur_sleep_tcb = devices[i].sleep_queue;
+			while(cur_sleep_tcb != (tcb_t*) 0)
+			{
+				runqueue_add(devices[i].sleep_queue, devices[i].sleep_queue->cur_prio);	
+				cur_sleep_tcb = cur_sleep_tcb->sleep_queue;
+			}	
 			/* enabling interrupts again */
-			enable_interrupts();			
+	
 			
 		}
 		/* code */

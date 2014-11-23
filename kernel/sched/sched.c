@@ -31,7 +31,7 @@ void sched_init(task_t* main_task  __attribute__((unused)))
  
 static void idle(void)
 {
-	 enable_interrupts();
+	 //enable_interrupts();
 	 while(1);
 }
 
@@ -60,12 +60,13 @@ void allocate_tasks(task_t** tasks  , size_t num_tasks)
 			system_tcb[i].native_prio = i;
 			system_tcb[i].cur_prio = i;
 			system_tcb[i].holds_lock = 0;
-			//system_tcb[i].sleep_queue =(struct tcb*) NULL;
+			system_tcb[i].sleep_queue =(tcb_t *) 0;
 			system_tcb[i].context.r6 = (uint32_t) tasks[0][i].stack_pos;
 			system_tcb[i].context.r5 = (uint32_t) tasks[0][i].data;
 			system_tcb[i].context.r4 = (uint32_t) tasks[0][i].lambda;
-			system_tcb[i].context.sp = (void *) system_tcb[i].kstack_high[0];
+			system_tcb[i].context.sp = (void *) system_tcb[i].kstack_high;
 			system_tcb[i].context.lr = (void *) launch_task;
+
 			runqueue_add(&system_tcb[i],i);
 		}	
 
@@ -74,7 +75,7 @@ void allocate_tasks(task_t** tasks  , size_t num_tasks)
 		system_tcb[IDLE_PRIO].native_prio = IDLE_PRIO;
 		system_tcb[IDLE_PRIO].cur_prio = IDLE_PRIO;
 		system_tcb[IDLE_PRIO].holds_lock = 0;
-		//system_tcb[IDLE_PRIO].sleep_queue =(struct tcb*) NULL;
+		system_tcb[IDLE_PRIO].sleep_queue =(tcb_t *) 0;
 		system_tcb[IDLE_PRIO].context.r6 = (uint32_t) tasks[0][IDLE_PRIO].stack_pos;
 		system_tcb[IDLE_PRIO].context.r4 = (uint32_t) (idle);
 		system_tcb[IDLE_PRIO].context.sp = (void *) system_tcb[IDLE_PRIO].kstack_high[0];
@@ -83,6 +84,5 @@ void allocate_tasks(task_t** tasks  , size_t num_tasks)
 
 		dispatch_init(&system_tcb[IDLE_PRIO]);
 		dispatch_nosave();
-
 }
 

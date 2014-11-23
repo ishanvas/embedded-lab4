@@ -12,8 +12,8 @@
 
 #include <config.h>
 #include <kernel.h>
- #include <arm/psr.h>
- #include <arm/exception.h>
+#include <arm/psr.h>
+#include <arm/exception.h>
 #include "sched_i.h"
 
 
@@ -48,7 +48,7 @@ void dispatch_save(void)
 	uint8_t cur_prio = get_cur_prio();
 	uint8_t new_prio = highest_prio();
 
-	if(cur_prio < new_prio)
+	if(cur_prio > new_prio)
 	{
 		tcb_t* curr_task = get_cur_tcb();
 		tcb_t* new_task  = &system_tcb[new_prio];
@@ -71,7 +71,7 @@ void dispatch_nosave(void)
 	uint8_t new_prio = highest_prio();
 
 	/* if cur task is not the highest priority task*/
-	if(cur_prio < new_prio)
+	if(cur_prio > new_prio)
 	{
 		/* getting new tasks tcb*/
 		tcb_t* new_task  = &system_tcb[new_prio];
@@ -101,10 +101,10 @@ void dispatch_sleep(void)
 	tcb_t* curr_task = get_cur_tcb();
 
 	/* Disabling interrupts since, runqueue_remove should be synchronized */
-	disable_interrupts();
+//	disable_interrupts();
 	/* Removing current task from run list */
 	runqueue_remove(cur_prio);
-	enable_interrupts();
+//	enable_interrupts();
 
 	/* getting new task */
 	tcb_t* new_task  = &system_tcb[new_prio];
@@ -114,7 +114,7 @@ void dispatch_sleep(void)
 	cur_tcb = new_task;
 
 	/*Switching context and saving prev context*/
-	ctx_switch_full(&curr_task->context, &new_task->context);
+	ctx_switch_full(&new_task->context,&curr_task->context);
 	
 }
 

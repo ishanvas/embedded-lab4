@@ -43,7 +43,6 @@ static void sortTasks(task_t* tasks, size_t num_tasks)
 		}
 	}
 
-
 }
 
 
@@ -52,21 +51,34 @@ int task_create(task_t* tasks , size_t num_tasks)
 {
 	/* validate tasks are schedulable */
 
+	/* initializing devices */
+	dev_init();
+
 	/* sort the tasks in order of priority */
 	sortTasks(tasks,num_tasks);
 	
 	/* call allocate_tasks */
 	allocate_tasks(&tasks,num_tasks);
 
-	/* initializing devices */
-	dev_init();
 
     return 0; /* remove this line after adding your code */
 }
 
-int event_wait(unsigned int dev  __attribute__((unused)))
-{
-  return 1; /* remove this line after adding your code */	
+int event_wait(unsigned int dev)
+{    
+    /*Validate the input parameter to the function*/
+    if(dev >= NUM_DEVICES) { 
+        return -EINVAL;
+    }
+
+    /*Add current task to sleep queue for the device*/
+    dev_wait(dev);    
+  
+    /*Run the task with the next highest priority*/
+    dispatch_sleep();
+ 
+    /*Event wait succesful*/
+    return 0;
 }
 
 /* An invalid syscall causes the kernel to exit. */
@@ -74,6 +86,6 @@ void invalid_syscall(unsigned int call_num  __attribute__((unused)))
 {
 	printf("Kernel panic: invalid syscall -- 0x%08x\n", call_num);
 
-	disable_interrupts();
+	//disable_interrupts();
 	while(1);
 }
