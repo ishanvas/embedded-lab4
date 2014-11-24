@@ -32,6 +32,10 @@ void sched_init(task_t* main_task  __attribute__((unused)))
 static void idle(void)
 {
 	 //enable_interrupts();
+	uint32_t cpsr;
+	asm volatile ("mrs %0, cpsr" : "=r" (cpsr));
+	cpsr &= ~(PSR_IRQ | PSR_FIQ);
+	asm volatile ("msr cpsr_c, %0" : : "r" (cpsr) : "memory", "cc");
 	 while(1);
 }
 
@@ -55,6 +59,7 @@ void allocate_tasks(task_t** tasks  , size_t num_tasks)
 
 	/* initializing the tasks */
 	unsigned int i;
+
 	for (i = 0; i < num_tasks; ++i)
 		{
 			system_tcb[i].native_prio = i;
@@ -78,7 +83,8 @@ void allocate_tasks(task_t** tasks  , size_t num_tasks)
 		system_tcb[IDLE_PRIO].sleep_queue =(tcb_t *) 0;
 		system_tcb[IDLE_PRIO].context.r6 = (uint32_t) tasks[0][IDLE_PRIO].stack_pos;
 		system_tcb[IDLE_PRIO].context.r4 = (uint32_t) (idle);
-		system_tcb[IDLE_PRIO].context.sp = (void *) system_tcb[IDLE_PRIO].kstack_high[0];
+		system_tcb[IDLE_PRIO].context.r8 = (uint32_t) (global_data);
+		system_tcb[IDLE_PRIO].context.sp = (void *) system_tcb[IDLE_PRIO].kstack_high;
 		system_tcb[IDLE_PRIO].context.lr = (void*)(*launch_task);
 		runqueue_add(&system_tcb[IDLE_PRIO],IDLE_PRIO);
 

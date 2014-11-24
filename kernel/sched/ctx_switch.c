@@ -54,7 +54,7 @@ void dispatch_save(void)
 		tcb_t* new_task  = &system_tcb[new_prio];
 
 		cur_tcb = new_task;
-		ctx_switch_full(&curr_task->context, &new_task->context);
+		ctx_switch_full(&new_task->context,&curr_task->context);
 	}
 }
 
@@ -95,10 +95,13 @@ void dispatch_sleep(void)
 {
 	/* getting priorities of current and new the tasks */
 	uint8_t cur_prio = get_cur_prio();
-	uint8_t new_prio = highest_prio();
+	
 
 	/* getting the current task tcb*/
 	tcb_t* curr_task = get_cur_tcb();
+
+	if (cur_prio < IDLE_PRIO)
+	{
 
 	/* Disabling interrupts since, runqueue_remove should be synchronized */
 //	disable_interrupts();
@@ -106,6 +109,8 @@ void dispatch_sleep(void)
 	runqueue_remove(cur_prio);
 //	enable_interrupts();
 
+
+	uint8_t new_prio = highest_prio();
 	/* getting new task */
 	tcb_t* new_task  = &system_tcb[new_prio];
 
@@ -115,6 +120,7 @@ void dispatch_sleep(void)
 
 	/*Switching context and saving prev context*/
 	ctx_switch_full(&new_task->context,&curr_task->context);
+	}
 	
 }
 

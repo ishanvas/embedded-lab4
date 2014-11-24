@@ -8,13 +8,17 @@
 	.global	New_S_Handler
 	@New Swi handler
 
-New_S_Handler:	SUB sp, sp, #4 
-	STMFD sp!, {r0-r12, lr} 
-	MRS r2, spsr 		
-	STR r2, [sp, #14*4]
-	MOV r1, sp
-	LDR r0, [lr, #-4]
+New_S_Handler:	SUB sp, sp, #4  @ Creating space for spsr
+	STMFD sp!, {r0-r12, lr} 	@ saving unbanked registers
+
+	MRS r2, spsr 				@ moving spsr to r2
+	STR r2, [sp, #14*4]			@ saving spsr in the space created
+	MOV r1, sp 					@ moving stack pointer to r1
+	LDR r0, [lr, #-4]			
 	BIC r0,r0,#0xff000000
+
+	STMFD sp, {r0, sp, lr}^		@ Saving user mode r0, sp and lr
+	add   sp, sp, #-12
 
 	MRS r4, cpsr  				@ enable irq
 	BIC r4, r4, #0x000000FF
@@ -25,9 +29,17 @@ New_S_Handler:	SUB sp, sp, #4
 	ldr r8, [r2]
 
 	BL C_SWI_Handler
+
+
+	ldmfd    sp, {r0, sp, lr}^ 		 @restoring user mode sp and lr
+	add      sp, sp, #12
+	
 	LDR r2, [sp, #14*4]
 	MSR spsr, r2
+	
+	
 	LDMFD sp!, {r0-r12, lr}
+
 	ADD sp, sp, #4
 	MOVS pc, lr
 

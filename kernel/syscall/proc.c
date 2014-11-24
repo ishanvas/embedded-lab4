@@ -49,6 +49,12 @@ static void sortTasks(task_t* tasks, size_t num_tasks)
 
 int task_create(task_t* tasks , size_t num_tasks)
 {
+
+	uint32_t cpsr;
+	asm volatile ("mrs %0, cpsr" : "=r" (cpsr));
+	cpsr |= PSR_IRQ | PSR_FIQ;
+	asm volatile ("msr cpsr_c, %0" : : "r" (cpsr) : "memory", "cc");
+
 	/* validate tasks are schedulable */
 
 	/* initializing devices */
@@ -59,6 +65,10 @@ int task_create(task_t* tasks , size_t num_tasks)
 	
 	/* call allocate_tasks */
 	allocate_tasks(&tasks,num_tasks);
+
+	asm volatile ("mrs %0, cpsr" : "=r" (cpsr));
+	cpsr &= ~(PSR_IRQ | PSR_FIQ);
+	asm volatile ("msr cpsr_c, %0" : : "r" (cpsr) : "memory", "cc");
 
 
     return 0; /* remove this line after adding your code */
@@ -73,9 +83,6 @@ int event_wait(unsigned int dev)
 
     /*Add current task to sleep queue for the device*/
     dev_wait(dev);    
-  
-    /*Run the task with the next highest priority*/
-    dispatch_sleep();
  
     /*Event wait succesful*/
     return 0;

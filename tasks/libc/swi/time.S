@@ -13,4 +13,4 @@
         .global time
 time:
 	swi TIME_SWI
-        mov pc, lr
+    mov pc, lr

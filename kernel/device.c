@@ -89,15 +89,7 @@ void dev_wait(unsigned int dev __attribute__((unused)))
 	}
 
 
-	dispatch_sleep();
-	
-	asm volatile ("mrs %0, cpsr" : "=r" (cpsr));
-	cpsr &= ~(PSR_IRQ | PSR_FIQ);
-	asm volatile ("msr cpsr_c, %0" : : "r" (cpsr) : "memory", "cc");
-	
-
-
-
+	dispatch_sleep();	
 	
 }
 
@@ -111,33 +103,45 @@ void dev_wait(unsigned int dev __attribute__((unused)))
  * interrupt corresponded to the interrupt frequency of a device, this 
  * function should ensure that the task is made ready to run 
  */
-void dev_update(volatile unsigned long millis)
+void dev_update(unsigned long millis)
 {
 	int match =0;
-	int i;
-	for (i = 0; i < NUM_DEVICES; ++i)
-	{
-		if( millis % devices[i].next_match == 0)
-		{
-			match =1;
-				/* Disabling interrupts since, add should be synchronized */
-			
-					/* Removing current task from run list */
+	unsigned int index =0;
 
-			tcb_t* cur_sleep_tcb = devices[i].sleep_queue;
-			while(cur_sleep_tcb != (tcb_t*) 0)
-			{
-				runqueue_add(devices[i].sleep_queue, devices[i].sleep_queue->cur_prio);	
-				cur_sleep_tcb = cur_sleep_tcb->sleep_queue;
-			}	
+	while (index < NUM_DEVICES)
+	{
+		if( millis >0  && (millis % devices[index].next_match == 0))
+		{
+			
+
+			/* Disabling interrupts since, add should be synchronized */
+
+			/* Removing current task from run list */
+			while(devices[index].sleep_queue != (tcb_t*)0){
+				match =1;
+				tcb_t* cur_sleep_tcb = devices[index].sleep_queue;
+				runqueue_add(devices[index].sleep_queue, devices[index].sleep_queue->cur_prio);
+				devices[index].sleep_queue = cur_sleep_tcb->sleep_queue;
+				cur_sleep_tcb->sleep_queue = (tcb_t*)0;
+			}
+
+	
+			//while(cur_sleep_tcb != (tcb_t*) 0)
+			//{   
+
+			//	runqueue_add(devices[i].sleep_queue, devices[i].sleep_queue->cur_prio);	
+			//	cur_sleep_tcb = cur_sleep_tcb->sleep_queue;
+			//}
+
 			/* enabling interrupts again */
 	
 			
 		}
-		/* code */
+
+		index=index+1;
 	}
 	
-	if(match)
+	if(match >0)
 	{	
 		dispatch_save();				
 	}
