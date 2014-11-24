@@ -13,3 +13,4 @@
 
 FUNC(mutex_create)
 	swi MUTEX_CREATE
+	mov pc, lr

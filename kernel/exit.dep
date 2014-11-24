@@ -1,0 +1,4 @@
+/home/ishan/lab4/kernel/exit.o: /home/ishan/lab4/kernel/exit.S \
+  /home/ishan/lab4/kernel/include/bits/swi.h
+
+/home/ishan/lab4/kernel/include/bits/swi.h:

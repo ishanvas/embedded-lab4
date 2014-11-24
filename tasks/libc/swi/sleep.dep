@@ -1,0 +1,5 @@
+/home/ishan/lab4/tasks/libc/swi/sleep.o:  \
+ /home/ishan/lab4/tasks/libc/swi/sleep.S \
+  /home/ishan/lab4/tasks/libc/include/asm.h
+
+/home/ishan/lab4/tasks/libc/include/asm.h:

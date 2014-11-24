@@ -1,0 +1,5 @@
+/home/ishan/lab4/tasks/libc/stdlib/rand.o:  \
+ /home/ishan/lab4/tasks/libc/stdlib/rand.c \
+  /home/ishan/lab4/tasks/libc/include/stdlib.h
+
+/home/ishan/lab4/tasks/libc/include/stdlib.h:

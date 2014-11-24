@@ -1,0 +1,8 @@
+/home/ishan/lab4/tasks/libc/stdlib/ctype.o:  \
+ /home/ishan/lab4/tasks/libc/stdlib/ctype.c \
+  /home/ishan/lab4/tasks/libc/include/ctype.h \
+  /home/ishan/lab4/tasks/libc/include/inline.h
+
+/home/ishan/lab4/tasks/libc/include/ctype.h:
+
+/home/ishan/lab4/tasks/libc/include/inline.h:

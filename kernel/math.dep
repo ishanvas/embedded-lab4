@@ -1,0 +1,7 @@
+/home/ishan/lab4/kernel/math.o: /home/ishan/lab4/kernel/math.c \
+  /home/ishan/lab4/kernel/include/types.h \
+  /home/ishan/lab4/kernel/include/math.h
+
+/home/ishan/lab4/kernel/include/types.h:
+
+/home/ishan/lab4/kernel/include/math.h:

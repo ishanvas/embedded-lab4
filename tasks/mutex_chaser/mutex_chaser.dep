@@ -1,0 +1,32 @@
+/home/ishan/lab4/tasks/mutex_chaser/mutex_chaser.o:  \
+ /home/ishan/lab4/tasks/mutex_chaser/mutex_chaser.c \
+  /home/ishan/lab4/tasks/libc/include/stdio.h \
+  /home/ishan/lab4/tasks/libc/include/stdarg.h \
+  /home/ishan/lab4/tasks/libc/include/sys/types.h \
+  /home/ishan/lab4/tasks/libc/include/bits/types.h \
+  /home/ishan/lab4/tasks/libc/include/unistd.h \
+  /home/ishan/lab4/tasks/libc/include/bits/fileno.h \
+  /home/ishan/lab4/tasks/libc/include/task.h \
+  /home/ishan/lab4/tasks/libc/include/lock.h \
+  /home/ishan/lab4/tasks/libc/include/bits/errno.h \
+  /home/ishan/lab4/tasks/libc/include/errno.h
+
+/home/ishan/lab4/tasks/libc/include/stdio.h:
+
+/home/ishan/lab4/tasks/libc/include/stdarg.h:
+
+/home/ishan/lab4/tasks/libc/include/sys/types.h:
+
+/home/ishan/lab4/tasks/libc/include/bits/types.h:
+
+/home/ishan/lab4/tasks/libc/include/unistd.h:
+
+/home/ishan/lab4/tasks/libc/include/bits/fileno.h:
+
+/home/ishan/lab4/tasks/libc/include/task.h:
+
+/home/ishan/lab4/tasks/libc/include/lock.h:
+
+/home/ishan/lab4/tasks/libc/include/bits/errno.h:
+
+/home/ishan/lab4/tasks/libc/include/errno.h:

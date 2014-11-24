@@ -1,0 +1,8 @@
+/home/ishan/lab4/tasks/libc/swi/time.o:  \
+ /home/ishan/lab4/tasks/libc/swi/time.S \
+  /home/ishan/lab4/tasks/libc/include/asm.h \
+  /home/ishan/lab4/tasks/libc/include/bits/swi.h
+
+/home/ishan/lab4/tasks/libc/include/asm.h:
+
+/home/ishan/lab4/tasks/libc/include/bits/swi.h:

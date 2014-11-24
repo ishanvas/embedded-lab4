@@ -1,0 +1,10 @@
+/home/ishan/lab4/kernel/arm/psr.o: /home/ishan/lab4/kernel/arm/psr.c \
+  /home/ishan/lab4/kernel/include/types.h \
+  /home/ishan/lab4/kernel/include/arm/psr.h \
+  /home/ishan/lab4/kernel/include/inline.h
+
+/home/ishan/lab4/kernel/include/types.h:
+
+/home/ishan/lab4/kernel/include/arm/psr.h:
+
+/home/ishan/lab4/kernel/include/inline.h:

@@ -1,0 +1,8 @@
+/home/ishan/lab4/tasks/libc/swi/mutex_create.o:  \
+ /home/ishan/lab4/tasks/libc/swi/mutex_create.S \
+  /home/ishan/lab4/tasks/libc/include/asm.h \
+  /home/ishan/lab4/tasks/libc/include/bits/swi.h
+
+/home/ishan/lab4/tasks/libc/include/asm.h:
+
+/home/ishan/lab4/tasks/libc/include/bits/swi.h:

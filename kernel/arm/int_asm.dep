@@ -1,0 +1,8 @@
+/home/ishan/lab4/kernel/arm/int_asm.o:  \
+ /home/ishan/lab4/kernel/arm/int_asm.S \
+  /home/ishan/lab4/kernel/include/asm.h \
+  /home/ishan/lab4/kernel/include/arm/psr.h
+
+/home/ishan/lab4/kernel/include/asm.h:
+
+/home/ishan/lab4/kernel/include/arm/psr.h:

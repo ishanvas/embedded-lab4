@@ -1,0 +1,11 @@
+/home/ishan/lab4/tasks/libc/swi/write.o:  \
+ /home/ishan/lab4/tasks/libc/swi/write.S \
+  /home/ishan/lab4/tasks/libc/include/asm.h \
+  /home/ishan/lab4/tasks/libc/include/bits/swi.h \
+  /home/ishan/lab4/tasks/libc/include/bits/errno.h
+
+/home/ishan/lab4/tasks/libc/include/asm.h:
+
+/home/ishan/lab4/tasks/libc/include/bits/swi.h:
+
+/home/ishan/lab4/tasks/libc/include/bits/errno.h:

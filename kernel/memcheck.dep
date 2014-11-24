@@ -1,0 +1,7 @@
+/home/ishan/lab4/kernel/memcheck.o: /home/ishan/lab4/kernel/memcheck.c \
+  /home/ishan/lab4/kernel/include/kernel.h \
+  /home/ishan/lab4/kernel/include/types.h
+
+/home/ishan/lab4/kernel/include/kernel.h:
+
+/home/ishan/lab4/kernel/include/types.h:

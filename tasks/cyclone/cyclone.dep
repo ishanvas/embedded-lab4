@@ -1,0 +1,29 @@
+/home/ishan/lab4/tasks/cyclone/cyclone.o:  \
+ /home/ishan/lab4/tasks/cyclone/cyclone.c \
+  /home/ishan/lab4/tasks/libc/include/stdio.h \
+  /home/ishan/lab4/tasks/libc/include/stdarg.h \
+  /home/ishan/lab4/tasks/libc/include/sys/types.h \
+  /home/ishan/lab4/tasks/libc/include/bits/types.h \
+  /home/ishan/lab4/tasks/libc/include/unistd.h \
+  /home/ishan/lab4/tasks/libc/include/bits/fileno.h \
+  /home/ishan/lab4/tasks/libc/include/task.h \
+  /home/ishan/lab4/tasks/libc/include/bits/dev.h \
+  /home/ishan/lab4/tasks/libc/include/lock.h
+
+/home/ishan/lab4/tasks/libc/include/stdio.h:
+
+/home/ishan/lab4/tasks/libc/include/stdarg.h:
+
+/home/ishan/lab4/tasks/libc/include/sys/types.h:
+
+/home/ishan/lab4/tasks/libc/include/bits/types.h:
+
+/home/ishan/lab4/tasks/libc/include/unistd.h:
+
+/home/ishan/lab4/tasks/libc/include/bits/fileno.h:
+
+/home/ishan/lab4/tasks/libc/include/task.h:
+
+/home/ishan/lab4/tasks/libc/include/bits/dev.h:
+
+/home/ishan/lab4/tasks/libc/include/lock.h:

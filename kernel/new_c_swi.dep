@@ -1,0 +1,22 @@
+/home/ishan/lab4/kernel/new_c_swi.o: /home/ishan/lab4/kernel/new_c_swi.c \
+  /home/ishan/lab4/kernel/include/new_swi.h \
+  /home/ishan/lab4/kernel/include/types.h \
+  /home/ishan/lab4/kernel/include/bits/swi.h \
+  /home/ishan/lab4/kernel/include/task.h \
+  /home/ishan/lab4/kernel/include/config.h \
+  /home/ishan/lab4/kernel/include/syscall.h \
+  /home/ishan/lab4/kernel/include/lock.h
+
+/home/ishan/lab4/kernel/include/new_swi.h:
+
+/home/ishan/lab4/kernel/include/types.h:
+
+/home/ishan/lab4/kernel/include/bits/swi.h:
+
+/home/ishan/lab4/kernel/include/task.h:
+
+/home/ishan/lab4/kernel/include/config.h:
+
+/home/ishan/lab4/kernel/include/syscall.h:
+
+/home/ishan/lab4/kernel/include/lock.h:

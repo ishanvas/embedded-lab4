@@ -1,0 +1,29 @@
+/home/ishan/lab4/kernel/lock/mutex.o:  \
+ /home/ishan/lab4/kernel/lock/mutex.c \
+  /home/ishan/lab4/kernel/include/lock.h \
+  /home/ishan/lab4/kernel/include/types.h \
+  /home/ishan/lab4/kernel/include/task.h \
+  /home/ishan/lab4/kernel/include/config.h \
+  /home/ishan/lab4/kernel/include/sched.h \
+  /home/ishan/lab4/kernel/include/bits/errno.h \
+  /home/ishan/lab4/kernel/include/arm/psr.h \
+  /home/ishan/lab4/kernel/include/inline.h \
+  /home/ishan/lab4/kernel/include/arm/exception.h
+
+/home/ishan/lab4/kernel/include/lock.h:
+
+/home/ishan/lab4/kernel/include/types.h:
+
+/home/ishan/lab4/kernel/include/task.h:
+
+/home/ishan/lab4/kernel/include/config.h:
+
+/home/ishan/lab4/kernel/include/sched.h:
+
+/home/ishan/lab4/kernel/include/bits/errno.h:
+
+/home/ishan/lab4/kernel/include/arm/psr.h:
+
+/home/ishan/lab4/kernel/include/inline.h:
+
+/home/ishan/lab4/kernel/include/arm/exception.h:

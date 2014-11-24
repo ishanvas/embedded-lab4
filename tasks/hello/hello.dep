@@ -1,0 +1,14 @@
+/home/ishan/lab4/tasks/hello/hello.o:  \
+ /home/ishan/lab4/tasks/hello/hello.c \
+  /home/ishan/lab4/tasks/libc/include/unistd.h \
+  /home/ishan/lab4/tasks/libc/include/bits/fileno.h \
+  /home/ishan/lab4/tasks/libc/include/sys/types.h \
+  /home/ishan/lab4/tasks/libc/include/bits/types.h
+
+/home/ishan/lab4/tasks/libc/include/unistd.h:
+
+/home/ishan/lab4/tasks/libc/include/bits/fileno.h:
+
+/home/ishan/lab4/tasks/libc/include/sys/types.h:
+
+/home/ishan/lab4/tasks/libc/include/bits/types.h:

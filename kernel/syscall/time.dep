@@ -1,0 +1,20 @@
+/home/ishan/lab4/kernel/syscall/time.o:  \
+ /home/ishan/lab4/kernel/syscall/time.c \
+  /home/ishan/lab4/kernel/include/types.h \
+  /home/ishan/lab4/kernel/include/config.h \
+  /home/ishan/lab4/kernel/include/bits/errno.h \
+  /home/ishan/lab4/kernel/include/arm/timer.h \
+  /home/ishan/lab4/kernel/include/syscall.h \
+  /home/ishan/lab4/kernel/include/task.h
+
+/home/ishan/lab4/kernel/include/types.h:
+
+/home/ishan/lab4/kernel/include/config.h:
+
+/home/ishan/lab4/kernel/include/bits/errno.h:
+
+/home/ishan/lab4/kernel/include/arm/timer.h:
+
+/home/ishan/lab4/kernel/include/syscall.h:
+
+/home/ishan/lab4/kernel/include/task.h:

@@ -1,0 +1,4 @@
+/home/ishan/lab4/kernel/start.o: /home/ishan/lab4/kernel/start.S \
+  /home/ishan/lab4/kernel/include/asm.h
+
+/home/ishan/lab4/kernel/include/asm.h:

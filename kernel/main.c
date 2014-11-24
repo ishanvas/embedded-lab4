@@ -16,6 +16,7 @@
 #include <new_irq.h>
 #include <kernel_utils.h>
 #include <types.h>
+ #include <lock.h>
 #include <exports.h>
 #include <timer_driver.h> 
 
@@ -152,6 +153,9 @@ int kmain(int argc, char** argv, uint32_t table)
 	
   /* initializes OS timer */
 	init_timer();
+
+  /* mutex init */
+	mutex_init();
 
   /* setups up stack for IRQ handler */
 	setup_irq_stack();

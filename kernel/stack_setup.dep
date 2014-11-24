@@ -1,0 +1,5 @@
+/home/ishan/lab4/kernel/stack_setup.o:  \
+ /home/ishan/lab4/kernel/stack_setup.S \
+  /home/ishan/lab4/kernel/include/bits/swi.h
+
+/home/ishan/lab4/kernel/include/bits/swi.h:

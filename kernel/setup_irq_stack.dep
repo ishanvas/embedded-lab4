@@ -1,0 +1,5 @@
+/home/ishan/lab4/kernel/setup_irq_stack.o:  \
+ /home/ishan/lab4/kernel/setup_irq_stack.S \
+  /home/ishan/lab4/kernel/include/bits/swi.h
+
+/home/ishan/lab4/kernel/include/bits/swi.h:

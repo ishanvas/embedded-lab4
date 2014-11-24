@@ -1,0 +1,10 @@
+/home/ishan/lab4/kernel/arm/reg.o: /home/ishan/lab4/kernel/arm/reg.c \
+  /home/ishan/lab4/kernel/include/types.h \
+  /home/ishan/lab4/kernel/include/arm/reg.h \
+  /home/ishan/lab4/kernel/include/inline.h
+
+/home/ishan/lab4/kernel/include/types.h:
+
+/home/ishan/lab4/kernel/include/arm/reg.h:
+
+/home/ishan/lab4/kernel/include/inline.h:

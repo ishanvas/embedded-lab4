@@ -1,0 +1,7 @@
+/home/ishan/lab4/kernel/ctype.o: /home/ishan/lab4/kernel/ctype.c \
+  /home/ishan/lab4/kernel/include/ctype.h \
+  /home/ishan/lab4/kernel/include/inline.h
+
+/home/ishan/lab4/kernel/include/ctype.h:
+
+/home/ishan/lab4/kernel/include/inline.h:
