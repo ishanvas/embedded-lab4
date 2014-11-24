@@ -9,7 +9,7 @@
  * @date  
  */
 
-//#define DEBUG_MUTEX
+#define DEBUG_MUTEX
 
 #include <lock.h>
 #include <task.h>
@@ -18,14 +18,16 @@
 #include <arm/psr.h>
 #include <arm/exception.h>
 #ifdef DEBUG_MUTEX
-#include <exports.h> // temp
+#include <exports.h>  temp
 #endif
 
 
 mutex_t gtMutex[OS_NUM_MUTEX];
 
+
 void mutex_init()
 {
+	disable_interrupts();
 	int i = 0;
     while(i < OS_NUM_MUTEX){
         gtMutex[i].bAvailable = TRUE;
@@ -34,11 +36,12 @@ void mutex_init()
         gtMutex[i].pHolding_Tcb = (tcb_t*)0;
         i++;
     }
+    enable_interrupts();
 }
 
 int mutex_create(void)
 {   
-
+	disable_interrupts();
     int i = 0;
     int mutex_ret = -ENOMEM;
     while (i < OS_NUM_MUTEX){
@@ -49,6 +52,7 @@ int mutex_create(void)
          }
          
          i++;
+    enable_interrupts();
     }
 
     
@@ -59,6 +63,7 @@ int mutex_create(void)
 int mutex_lock(int mutex)
 {
 
+	disable_interrupts();
 	unsigned int ret = 0;
 
 	/* Getting current running task */
@@ -106,13 +111,14 @@ int mutex_lock(int mutex)
         gtMutex[mutex].pHolding_Tcb = curr_task;
     }
 
-
+    enable_interrupts();
     return ret;
 	
 }
 
 int mutex_unlock(int mutex)
-{   
+{
+	disable_interrupts();   
     tcb_t* curr_task = get_cur_tcb();
     
     /*Validate function parameters*/
@@ -141,6 +147,8 @@ int mutex_unlock(int mutex)
             
         }
     }
+
+    enable_interrupts();
     return 0;
 }
 

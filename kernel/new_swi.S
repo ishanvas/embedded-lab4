@@ -17,8 +17,8 @@ New_S_Handler:	SUB sp, sp, #4  @ Creating space for spsr
 	LDR r0, [lr, #-4]			
 	BIC r0,r0,#0xff000000
 
-	STMFD sp, {r0, sp, lr}^		@ Saving user mode r0, sp and lr
-	add   sp, sp, #-12
+	STMFD sp, {sp, lr}^		@ Saving user mode r0, sp and lr
+	add   sp, sp, #-8
 
 	MRS r4, cpsr  				@ enable irq
 	BIC r4, r4, #0x000000FF
@@ -31,9 +31,9 @@ New_S_Handler:	SUB sp, sp, #4  @ Creating space for spsr
 	BL C_SWI_Handler
 
 
-	ldmfd    sp, {r0, sp, lr}^ 		 @restoring user mode sp and lr
-	add      sp, sp, #12
-	
+	ldmfd    sp, {sp, lr}^ 		 @restoring user mode sp and lr
+	add      sp, sp, #8
+
 	LDR r2, [sp, #14*4]
 	MSR spsr, r2
 	

@@ -29,6 +29,7 @@ static void sortTasks(task_t* tasks, size_t num_tasks)
 	unsigned int i;
 	unsigned int j;
 	/* implementing bubble sort */
+	
 	for (i = 0; i < (num_tasks-1); ++i)
 	{
 		for (j = 0; j < num_tasks-(1+i); ++j)
@@ -42,15 +43,14 @@ static void sortTasks(task_t* tasks, size_t num_tasks)
 			
 		}
 	}
-
 }
 
 
 
 int task_create(task_t* tasks , size_t num_tasks)
 {
-
 	uint32_t cpsr;
+
 	asm volatile ("mrs %0, cpsr" : "=r" (cpsr));
 	cpsr |= PSR_IRQ | PSR_FIQ;
 	asm volatile ("msr cpsr_c, %0" : : "r" (cpsr) : "memory", "cc");
@@ -69,7 +69,6 @@ int task_create(task_t* tasks , size_t num_tasks)
 	asm volatile ("mrs %0, cpsr" : "=r" (cpsr));
 	cpsr &= ~(PSR_IRQ | PSR_FIQ);
 	asm volatile ("msr cpsr_c, %0" : : "r" (cpsr) : "memory", "cc");
-
 
     return 0; /* remove this line after adding your code */
 }

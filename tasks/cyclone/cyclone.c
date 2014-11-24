@@ -52,7 +52,10 @@ void fun1(void* str)
 int main(int argc, char** argv)
 {
 	ct = 0;
-	puts("Test begin");
+	//sleep(100);
+	puts("Test begin : Sleeping for 100 ms");
+	puts("Done Sleeping for 100 ms");
+
 	task_t tasks[1];
 	tasks[0].lambda = fun1;
 	tasks[0].data = (void*)0;

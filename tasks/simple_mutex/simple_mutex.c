@@ -93,6 +93,7 @@ void fun3(void* str)
 			panic("Dev 2 failed");
 	}
 }
+
 int main(int argc, char** argv)
 {
 	task_t tasks[3];

@@ -7,8 +7,12 @@
  */
 
 #include <asm.h>
+#include <bits/swi.h>
 
 	.file "sleep.S"
+        .text
+        .global sleep
 
-FUNC(sleep)
-	@ Add code here.  Put your names at the top.
+sleep:
+      swi SLEEP_SWI
+      mov pc, lr

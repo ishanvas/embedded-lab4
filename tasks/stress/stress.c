@@ -28,7 +28,7 @@ void fun1(void* str)
 	while(1)
 	{	
 		if(flag == 0) {	
-			printf("Time is now %lu\n",time());
+			printf("Time is now %d %lu\n",(int)str, time());
 		}
 		score[(int)str]++;
 		sleep((int)str);

@@ -150,9 +150,13 @@ int kmain(int argc, char** argv, uint32_t table)
   	/* installs new irq handler */
   	install_g_handler(IRQ_VEC_ADDRESS,new_irq_adr,irq_ins);
 	
+
 	
   /* initializes OS timer */
 	init_timer();
+
+  /* initializing devices */
+	dev_init();
 
   /* mutex init */
 	mutex_init();

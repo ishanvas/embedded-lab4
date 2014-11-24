@@ -53,6 +53,7 @@ int main(int argc, char** argv)
 	tasks[1].T = PERIOD_DEV1;
 	
 	task_create(tasks, 2);
+	
 	argc=argc; /* remove compiler warning */
 	argv=argv; /* remove compiler warning */
 
