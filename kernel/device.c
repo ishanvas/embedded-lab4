@@ -46,7 +46,7 @@ static dev_t devices[NUM_DEVICES];
 void dev_init(void)
 {
 	int i;
-	/* initializing all the device next match values */
+	/* initializing all the devices, setting next match = dev frequency and sleep queue = NULL */
    for (i = 0; i < NUM_DEVICES; ++i)
    {	
    		devices[i].sleep_queue =  (tcb_t *) 0;
@@ -61,18 +61,18 @@ void dev_init(void)
  *
  * @param dev  Device number.
  */
-void dev_wait(unsigned int dev __attribute__((unused)))
+void dev_wait(unsigned int dev )
 {
-
+	/* Getting current running task */
 	tcb_t* cur_tcb = get_cur_tcb();
 
+	/* Getting current task in sleep queue */
 	tcb_t* cur_sleep_tcb = devices[dev].sleep_queue;
 
-	uint32_t cpsr;
-	asm volatile ("mrs %0, cpsr" : "=r" (cpsr));
-	cpsr |= PSR_IRQ | PSR_FIQ;
-	asm volatile ("msr cpsr_c, %0" : : "r" (cpsr) : "memory", "cc");
+	/* disabling interrupts */
+	disable_interrupts();
 
+	/* putting the task in sleep queue */
 	if(cur_sleep_tcb == (tcb_t*)0)
 	{
 		devices[dev].sleep_queue =  cur_tcb;	
@@ -88,8 +88,11 @@ void dev_wait(unsigned int dev __attribute__((unused)))
 		cur_sleep_tcb->	sleep_queue = cur_tcb;
 	}
 
-
+	/* making the current task sleep */
 	dispatch_sleep();	
+
+	/* process will enable interrupts when it is awaken */
+	enable_interrupts();
 	
 }
 
@@ -105,16 +108,17 @@ void dev_wait(unsigned int dev __attribute__((unused)))
  */
 void dev_update(unsigned long millis)
 {
-	int match =0;
+
+	int match =0; /* set to 1 if even a single match has occured */
 	unsigned int index =0;
 
+	/* Wakes up all the sleeping tasks, whose dev frequency has matched */
+
 	while (index < NUM_DEVICES)
-	{
+	{	
+		/* if time is >0 and a match has occured */
 		if( millis >0  && (millis % devices[index].next_match == 0))
 		{
-			
-
-			/* Disabling interrupts since, add should be synchronized */
 
 			/* Removing current task from run list */
 			while(devices[index].sleep_queue != (tcb_t*)0){
@@ -123,26 +127,17 @@ void dev_update(unsigned long millis)
 				runqueue_add(devices[index].sleep_queue, devices[index].sleep_queue->cur_prio);
 				devices[index].sleep_queue = cur_sleep_tcb->sleep_queue;
 				cur_sleep_tcb->sleep_queue = (tcb_t*)0;
-			}
-
-	
-			//while(cur_sleep_tcb != (tcb_t*) 0)
-			//{   
-
-			//	runqueue_add(devices[i].sleep_queue, devices[i].sleep_queue->cur_prio);	
-			//	cur_sleep_tcb = cur_sleep_tcb->sleep_queue;
-			//}
-
-			/* enabling interrupts again */
-	
+			}	
 			
 		}
 
 		index=index+1;
 	}
 	
+	/* if a process has woken up */
 	if(match >0)
 	{	
+		/* doing a full context switch */
 		dispatch_save();				
 	}
 

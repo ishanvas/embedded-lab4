@@ -14,7 +14,8 @@
   /home/ishan/lab4/kernel/include/lock.h \
   /home/ishan/lab4/kernel/include/task.h \
   /home/ishan/lab4/kernel/include/config.h \
-  /home/ishan/lab4/kernel/include/timer_driver.h
+  /home/ishan/lab4/kernel/include/timer_driver.h \
+  /home/ishan/lab4/kernel/include/device.h
 
 /home/ishan/lab4/uboot/include/exports.h:
 
@@ -47,3 +48,5 @@
 /home/ishan/lab4/kernel/include/config.h:
 
 /home/ishan/lab4/kernel/include/timer_driver.h:
+
+/home/ishan/lab4/kernel/include/device.h:

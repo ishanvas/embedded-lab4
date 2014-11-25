@@ -14,9 +14,11 @@ setup_irq_stack:	MRS r3, cpsr  @ changes mode from kernel to irq
 	ORR r3, r3, #0xc2
 	MSR cpsr,r3
 
-						   	   @ setting the stack pointer of IRQ mode
+@ setting the stack pointer of IRQ mode
 	MOV sp, #0xa2000000
 	
-	MSR cpsr,r4				   @ moving back to kernel mode
+@ moving back to kernel mode
+	MSR cpsr,r4				   
 
-	mov pc, lr				   @moving to user mode
+@ moving to user mode
+	mov pc, lr				   

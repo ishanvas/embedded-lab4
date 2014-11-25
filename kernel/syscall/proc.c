@@ -87,9 +87,9 @@ int task_create(task_t* tasks , size_t num_tasks)
 	/* disabling interrupts before creating tasks 
 	 * When kernel starts a user process, it enables the interrupts again 
 	 * So no need to enable interrupts here */
-	//disable_interrupts();
+	disable_interrupts();
 
-	/* initializing devices, do that if any previces tasks were sleeping in device queue they are never wokenup */
+	/* initializing devices, so that if any previces tasks were sleeping in device queue they are removed */
 	dev_init();
 
 	/* sort the tasks in order of priority */

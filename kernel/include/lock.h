@@ -24,6 +24,7 @@ struct mutex
 	bool_e	bLock;			/* 1 for lock/0 for unlock */	
 	tcb_t*	pSleep_queue;	/* list of applications waiting for this mutex */
 };
+
 typedef struct mutex mutex_t;
 
 struct cond

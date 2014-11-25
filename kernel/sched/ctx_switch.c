@@ -45,15 +45,22 @@ void dispatch_init(tcb_t* idle )
  */
 void dispatch_save(void)
 {
+	/* getting priorities of current and new the tasks */	
 	uint8_t cur_prio = get_cur_prio();
 	uint8_t new_prio = highest_prio();
 
+	/* if cur task is not the highest priority task*/
 	if(cur_prio > new_prio)
 	{
 		tcb_t* curr_task = get_cur_tcb();
+
+		/* getting new tasks tcb*/
 		tcb_t* new_task  = &system_tcb[new_prio];
 
+		/* setting the new task as current task */		
 		cur_tcb = new_task;
+		
+		/*Switching context and saving prev context*/
 		ctx_switch_full(&new_task->context,&curr_task->context);
 	}
 }
@@ -79,7 +86,7 @@ void dispatch_nosave(void)
 		/* setting the new task as current task */		
 		cur_tcb = new_task;
 
-		/*Switching context with saving prev context*/
+		/*Switching context without saving prev context*/
 		ctx_switch_half(&new_task->context);
 	}
 }
@@ -100,22 +107,19 @@ void dispatch_sleep(void)
 	/* getting the current task tcb*/
 	tcb_t* curr_task = get_cur_tcb();
 
+	/* if IDLE task is running, don't let it go to sleep */
 	if (cur_prio < IDLE_PRIO)
 	{
 
-	/* Disabling interrupts since, runqueue_remove should be synchronized */
-//	disable_interrupts();
-	/* Removing current task from run list */
+	/* Removing from the run queue */
 	runqueue_remove(cur_prio);
-//	enable_interrupts();
 
-
+	/* getting the higest priority task */
 	uint8_t new_prio = highest_prio();
 	/* getting new task */
 	tcb_t* new_task  = &system_tcb[new_prio];
 
 	/* setting the new task as current task */
-	/* Is sync needed ?? */
 	cur_tcb = new_task;
 
 	/*Switching context and saving prev context*/

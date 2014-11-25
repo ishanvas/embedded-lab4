@@ -19,6 +19,7 @@
  #include <lock.h>
 #include <exports.h>
 #include <timer_driver.h> 
+ #include <device.h>
 
 
 uint32_t global_data;
