@@ -14,10 +14,4 @@
 
 void New_S_Handler();
 
-ssize_t read(int fd, void *buf, size_t count)  ;
-ssize_t write(int fd, const void *buf, size_t count);
-void exit(unsigned *argv);
-unsigned long time ();
-void sleep (unsigned sleep_time);
-
 #endif /* NEW_SWI_H */

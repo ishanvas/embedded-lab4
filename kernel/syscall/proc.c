@@ -23,13 +23,39 @@
 #include <device.h>
 
 
+ /*Function to validate the user program specification for the tasks*/
+static int validate_tasks(task_t* tasks, size_t num_tasks){
+	unsigned int i=0;
+	for(i = 0; i < num_tasks ; i++){
 
+	/*Check if the tasks will meet their deadlines*/
+		if(tasks[i].C > tasks[i].T){
+			return -ESCHED;
+		}
+
+	/*Check if the number of tasks is supported by OS*/
+		if(num_tasks > OS_MAX_TASKS){
+			return -EINVAL;
+		}
+
+	/*Check the stack postion of the tasks*/
+		if((uint32_t)tasks[i].stack_pos < USR_START_ADDR|| 
+			(uint32_t)tasks[i].stack_pos > USR_END_ADDR)
+			return -EFAULT;
+	}
+
+	return 0;
+}
+
+
+/* Sorts the input task list by their frequenct (T) */
 static void sortTasks(task_t* tasks, size_t num_tasks)
 {
 	unsigned int i;
 	unsigned int j;
-	/* implementing bubble sort */
 	
+	/* Simple bubble sort implementation*/
+
 	for (i = 0; i < (num_tasks-1); ++i)
 	{
 		for (j = 0; j < num_tasks-(1+i); ++j)
@@ -49,26 +75,28 @@ static void sortTasks(task_t* tasks, size_t num_tasks)
 
 int task_create(task_t* tasks , size_t num_tasks)
 {
-	uint32_t cpsr;
-
-	asm volatile ("mrs %0, cpsr" : "=r" (cpsr));
-	cpsr |= PSR_IRQ | PSR_FIQ;
-	asm volatile ("msr cpsr_c, %0" : : "r" (cpsr) : "memory", "cc");
-
 	/* validate tasks are schedulable */
+	int error = validate_tasks(tasks ,num_tasks);
 
-	/* initializing devices */
+	/* Returning if there is an error */
+	if(error < 0)
+	{
+		return error;
+	}
+
+	/* disabling interrupts before creating tasks 
+	 * When kernel starts a user process, it enables the interrupts again 
+	 * So no need to enable interrupts here */
+	//disable_interrupts();
+
+	/* initializing devices, do that if any previces tasks were sleeping in device queue they are never wokenup */
 	dev_init();
 
 	/* sort the tasks in order of priority */
 	sortTasks(tasks,num_tasks);
 	
-	/* call allocate_tasks */
+	/* allocating tasks */
 	allocate_tasks(&tasks,num_tasks);
-
-	asm volatile ("mrs %0, cpsr" : "=r" (cpsr));
-	cpsr &= ~(PSR_IRQ | PSR_FIQ);
-	asm volatile ("msr cpsr_c, %0" : : "r" (cpsr) : "memory", "cc");
 
     return 0; /* remove this line after adding your code */
 }

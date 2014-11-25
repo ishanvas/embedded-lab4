@@ -12,10 +12,12 @@
 #include <arm/timer.h>
 #include <syscall.h>
 
+extern volatile unsigned long sys_time;
+
 
 unsigned long time_syscall(void)
 {
- return 1; /* remove this line after adding your code here */	
+     return (unsigned long) sys_time;
 }
 
 
@@ -26,7 +28,14 @@ unsigned long time_syscall(void)
  *
  * 
  */
-void sleep_syscall(unsigned long millis  __attribute__((unused)))
+void sleep_syscall(unsigned long millis  )
 {
-	
+	unsigned long wake_up_time = sys_time + millis;
+
+    while(1)
+    {
+       if (sys_time > wake_up_time)
+            break;
+      //printf("sleeping %lu until %lu\n", sys_time,wake_up_time);
+    }
 }

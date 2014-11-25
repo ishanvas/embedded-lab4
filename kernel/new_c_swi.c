@@ -17,6 +17,7 @@ void C_SWI_Handler(unsigned swi_num, unsigned *regs )
           unsigned long time_elapsed;
           int mutex;
           unsigned int dev;
+          int create_err;
           /* Routing based on swi_num */
           switch(swi_num) {                                   
           //case EXIT_SWI :                      
@@ -28,7 +29,7 @@ void C_SWI_Handler(unsigned swi_num, unsigned *regs )
                   fd = (int)*regs;                                           
                   buff =(char *)*(regs+1);     
                   count = (int)*(regs+2);      
-                  readCount = read(fd,buff,count);                                
+                  readCount = read_syscall(fd,buff,count);                                
                   *regs = readCount;                                              
                   break;                                          
 
@@ -37,7 +38,8 @@ void C_SWI_Handler(unsigned swi_num, unsigned *regs )
                 /* populating args */
                 task_t* tasks = (task_t *)*regs;                            
                 size_t count =(size_t )*(regs+1);                    
-                task_create(tasks,count);
+                create_err = task_create(tasks,count);
+                *regs = create_err;
                 break;
                 }
                                                                 
@@ -46,12 +48,12 @@ void C_SWI_Handler(unsigned swi_num, unsigned *regs )
                 fd = (int)*regs;                            
                 buff =(char *)*(regs+1);                    
                 count = (int)*(regs+2);                     
-                writeCount = write(fd,buff,count);                             
+                writeCount = write_syscall(fd,buff,count);                             
                 *regs = writeCount;                                            
                 break;                              
         case TIME_SWI :
                 /*Time returns the time since the kernel boot*/
-                time_elapsed = time((unsigned)*regs);
+                time_elapsed = time_syscall();
                 *regs = time_elapsed;
                 break;
 
@@ -75,10 +77,12 @@ void C_SWI_Handler(unsigned swi_num, unsigned *regs )
                 break;
 
           case SLEEP_SWI:
-                sleep ((unsigned)*regs);
+                sleep_syscall((unsigned)*regs);
+
                 break;
 
         default :                                               
+                invalid_syscall(swi_num);
                 break;                                                     
         }                                         
 
